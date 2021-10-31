@@ -1,6 +1,6 @@
 {
   "name": "aysasoft",
-  "version": "0.0.1",
+  "version": "0.0.12",
   "peerDependencies": {
     "@angular/common": "^12.2.0",
     "@angular/core": "^12.2.0",
@@ -9,7 +9,9 @@
     "rtl-detect": "^1.0.4"
   },
   "dependencies": {
+    "@mdi/font": "^6.4.95",
     "bootstrap": "^5.1.3",
+    "rtl-detect": "^1.0.4",
     "tslib": "^2.3.0"
   },
   "devDependencies": {

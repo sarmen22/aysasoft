@@ -4,8 +4,7 @@
   "assets": ["./aysasoft.scss"],
   "lib": {
     "entryFile": "src/public-api.ts",
-    "styleIncludePaths": ["./aysasoft.scss"],
-    "cssUrl": "inline"
+    "styleIncludePaths": ["./aysasoft.scss"]
   },
-  "allowedNonPeerDependencies": ["bootstrap"]
+  "allowedNonPeerDependencies": ["bootstrap", "rtl-detect", "@mdi/font"]
 }
