@@ -3,6 +3,10 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
+      "@aysasoft/language": [
+        "dist/aysasoft/language/aysasoft-language",
+        "dist/aysasoft/language"
+      ],
       "aysasoft": [
         "dist/aysasoft/aysasoft",
         "dist/aysasoft"

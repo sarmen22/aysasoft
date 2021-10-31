@@ -1,0 +1,30 @@
+<table class="table caption-top table-bordered">
+  <caption [dir]="LangService.rtl">{{Caption}}</caption>
+  <thead>
+    <tr>
+      <th [width]="100" class="text-center">Language</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody [formGroup]="langInputForm">
+    <tr>
+      <td>Armenian</td>
+      <td>
+        <input type="text" formControlName="am" class="form-control form-control-sm"
+          [placeholder]="Caption + ' In Armenian ...'">
+      </td>
+    </tr>
+    <tr>
+      <td>English</td>
+      <td><input type="text" formControlName="en" class="form-control form-control-sm"
+          [placeholder]="Caption + ' In English ...'">
+      </td>
+    </tr>
+    <tr>
+      <td>Farsi</td>
+      <td><input type="text" formControlName="fa" class="form-control form-control-sm"
+          [placeholder]="Caption + ' In Farsi ...'">
+      </td>
+    </tr>
+  </tbody>
+</table>
