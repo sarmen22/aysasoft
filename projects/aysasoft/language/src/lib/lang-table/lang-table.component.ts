@@ -9,7 +9,7 @@ import { of, Subscription } from 'rxjs';
 import { LanguageService } from '../language.service';
 
 @Component({
-  selector: 'lib-lang-table',
+  selector: 'lang-table',
   templateUrl: './lang-table.component.html',
   styleUrls: ['./lang-table.component.css'],
   providers: [

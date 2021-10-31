@@ -9,7 +9,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as _ from 'lodash';
 
 @Component({
-  selector: 'lib-lang-textarea',
+  selector: 'lang-textarea',
   templateUrl: './lang-textarea.component.html',
   styleUrls: ['./lang-textarea.component.css'],
   providers: [
