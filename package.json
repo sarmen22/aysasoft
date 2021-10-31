@@ -1,6 +1,16 @@
 {
   "name": "appworkspace",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Working space for Aysasoft Library",
+  "author": {
+    "name": "Sarmen Pirageneh",
+    "email": "sarmen22@gmail.com",
+    "url": "https://www.aysasoft.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sarmen22/aysasoft"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
