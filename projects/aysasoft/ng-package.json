@@ -1,0 +1,11 @@
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/aysasoft",
+  "assets": ["./aysasoft.scss"],
+  "lib": {
+    "entryFile": "src/public-api.ts",
+    "styleIncludePaths": ["./aysasoft.scss"],
+    "cssUrl": "inline"
+  },
+  "allowedNonPeerDependencies": ["bootstrap"]
+}
