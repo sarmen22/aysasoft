@@ -1,13 +1,12 @@
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  ViewChild,
-} from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { LanguageService } from '../language.service';
+  ControlValueAccessor,
+  FormBuilder,
+  FormGroup,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import * as _ from 'lodash';
+import { of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'lang-input',
@@ -21,9 +20,8 @@ import * as _ from 'lodash';
     },
   ],
 })
-export class LangInputComponent implements AfterViewInit, ControlValueAccessor {
+export class LangInputComponent implements ControlValueAccessor {
   @ViewChild('ULList') ULList!: ElementRef<HTMLUListElement>;
-  @ViewChild('LangInput') LangInput!: ElementRef<HTMLInputElement>;
 
   @Input() Caption: string = '';
   @Input() Name: string = '';
@@ -31,8 +29,11 @@ export class LangInputComponent implements AfterViewInit, ControlValueAccessor {
     { caption: 'AM', value: 'am' },
     { caption: 'EN', value: 'en', selected: true },
     { caption: 'FA', value: 'fa' },
-    { caption: 'RU', value: 'ru' },
   ];
+
+  inputA: FormGroup = this.fb.group({
+    name: [],
+  });
 
   onTouched: Function = () => {};
   onChange = (result: any) => {};
@@ -42,7 +43,7 @@ export class LangInputComponent implements AfterViewInit, ControlValueAccessor {
     | undefined;
   valueLang: any;
 
-  constructor() {
+  constructor(private readonly fb: FormBuilder) {
     this.Langs?.forEach((lang) => {
       if (lang.selected) {
         this.selectedlang = { ...lang };
@@ -66,39 +67,37 @@ export class LangInputComponent implements AfterViewInit, ControlValueAccessor {
       const sl = this.selectedlang.value;
       const vl = this.valueLang[sl];
       if (vl) {
-        this.LangInput.nativeElement.value = vl;
+        this.inputA.setValue({ name: vl }, { emitEvent: false });
       } else {
-        this.LangInput.nativeElement.value = '';
+        this.inputA.setValue({ name: '' }, { emitEvent: false });
       }
     }
   }
 
   onSaveClick() {
     const lo = this.selectedlang?.value as string;
-    const val = this.LangInput.nativeElement.value;
+    const value = this.inputA.get('name')?.value;
     if (_.has(this.valueLang, lo)) {
-      this.valueLang[lo] = val;
+      this.valueLang[lo] = value;
     } else {
-      this.valueLang = { ...this.valueLang, [lo]: val };
+      this.valueLang = { ...this.valueLang, [lo]: value };
     }
     this.onChange(this.valueLang);
-  }
-
-  ngAfterViewInit(): void {
-    if (this.valueLang && this.selectedlang) {
-      const sl = this.selectedlang.value;
-      const vl = this.valueLang[sl];
-      if (vl) {
-        this.LangInput.nativeElement.value = vl;
-      } else {
-        this.LangInput.nativeElement.value = '';
-      }
-    }
   }
 
   writeValue(value: any) {
     if (value) {
       this.valueLang = { ...value };
+      if (this.valueLang) {
+        const sl = _.keys(this.valueLang)[0];
+        const vl = this.valueLang[sl];
+        this.selectedlang = this.Langs?.filter((x) => x.value == sl)[0];
+        if (vl) {
+          this.inputA.setValue({ name: vl }, { emitEvent: false });
+        } else {
+          this.inputA.setValue({ name: '' }, { emitEvent: false });
+        }
+      }
     }
   }
 

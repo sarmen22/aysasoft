@@ -1,11 +1,10 @@
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Input,
-  ViewChild,
-} from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+  ControlValueAccessor,
+  FormBuilder,
+  FormGroup,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
 import * as _ from 'lodash';
 
 @Component({
@@ -20,11 +19,8 @@ import * as _ from 'lodash';
     },
   ],
 })
-export class LangTextareaComponent
-  implements AfterViewInit, ControlValueAccessor
-{
+export class LangTextareaComponent implements ControlValueAccessor {
   @ViewChild('ULList') ULList!: ElementRef<HTMLUListElement>;
-  @ViewChild('LangInput') LangInput!: ElementRef<HTMLInputElement>;
 
   @Input() Rows: number = 3;
   @Input() Cols: number = 0;
@@ -37,6 +33,10 @@ export class LangTextareaComponent
     { caption: 'FA', value: 'fa' },
   ];
 
+  inputA: FormGroup = this.fb.group({
+    name: [],
+  });
+
   onTouched: Function = () => {};
   onChange = (result: any) => {};
 
@@ -45,7 +45,7 @@ export class LangTextareaComponent
     | undefined;
   valueLang: any;
 
-  constructor() {
+  constructor(private readonly fb: FormBuilder) {
     this.Langs?.forEach((lang) => {
       if (lang.selected) {
         this.selectedlang = { ...lang };
@@ -69,39 +69,37 @@ export class LangTextareaComponent
       const sl = this.selectedlang.value;
       const vl = this.valueLang[sl];
       if (vl) {
-        this.LangInput.nativeElement.value = vl;
+        this.inputA.setValue({ name: vl }, { emitEvent: false });
       } else {
-        this.LangInput.nativeElement.value = '';
+        this.inputA.setValue({ name: '' }, { emitEvent: false });
       }
     }
   }
 
   onSaveClick() {
     const lo = this.selectedlang?.value as string;
-    const val = this.LangInput.nativeElement.value;
+    const value = this.inputA.get('name')?.value;
     if (_.has(this.valueLang, lo)) {
-      this.valueLang[lo] = val;
+      this.valueLang[lo] = value;
     } else {
-      this.valueLang = { ...this.valueLang, [lo]: val };
+      this.valueLang = { ...this.valueLang, [lo]: value };
     }
     this.onChange(this.valueLang);
-  }
-
-  ngAfterViewInit(): void {
-    if (this.valueLang && this.selectedlang) {
-      const sl = this.selectedlang.value;
-      const vl = this.valueLang[sl];
-      if (vl) {
-        this.LangInput.nativeElement.value = vl;
-      } else {
-        this.LangInput.nativeElement.value = '';
-      }
-    }
   }
 
   writeValue(value: any) {
     if (value) {
       this.valueLang = { ...value };
+      if (this.valueLang) {
+        const sl = _.keys(this.valueLang)[0];
+        const vl = this.valueLang[sl];
+        this.selectedlang = this.Langs?.filter((x) => x.value == sl)[0];
+        if (vl) {
+          this.inputA.setValue({ name: vl }, { emitEvent: false });
+        } else {
+          this.inputA.setValue({ name: '' }, { emitEvent: false });
+        }
+      }
     }
   }
 

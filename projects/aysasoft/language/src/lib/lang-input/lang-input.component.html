@@ -1,6 +1,6 @@
 <label [attr.for]="Name" class="form-label">{{Caption}}</label>
-<div class="input-group mb-3">
-  <input type="text" class="form-control" [name]="Name" [id]="Name" #LangInput autocomplete="off">
+<div class="input-group mb-3" [formGroup]="inputA">
+  <input type="text" class="form-control" [name]="Name" [id]="Name" formControlName="name">
   <button class="btn btn-primary dropdown-toggle ps-1" type="button" data-bs-toggle="dropdown"
     aria-expanded="false">{{selectedlang?.caption}} </button>
   <ul class="dropdown-menu dropdown-menu-start" #ULList>
